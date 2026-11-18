@@ -6,6 +6,8 @@
 数据接入（JSON/CSV、字段验证、批次指纹）→ 参数化分析（异步 Python worker）→ 结果复核（指标、图形、明细、解释、批准）→ 定时分发（本地收件箱、CSV/JSON、SHA256）；另有业务总览和审计轨迹。
 三个贯穿全栈的实体：Dataset 数据批次、Job 分析任务、Report 分发计划；辅助 User、Audit、Delivery。
 
+**选定批次回放静默**（导航「静默回放」，API 前缀 `/silence`）：在不可变批次上做分段回放，重度告警常显，轻度告警只被时窗内实际可见的上游告警静默（同刻不互压、被静默者不能再当凭据）；分段接续已算时刻、重试幂等；任一服务告警全被压掉即拒绝批准。改方案升版本并撤批准须重审，简报只冻结当前获准回放。规则与口径见 [BUSINESS.md](BUSINESS.md)，测试在 `test-artifacts/gb-1013/tests/test_silence_engine.py`、`test_silence_api.py`。
+
 ## 快速启动
 ```bash
 cp .env.example .env
